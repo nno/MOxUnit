@@ -34,7 +34,9 @@ before_install:
     - cd MOxUnit
     # prevent shippable from re-using old test results
     - if [[  "$SHIPPABLE" == "true"  ]]; then
-          rm -f shippable/testresults/*.xml;
+          if [[  "$WITH_COVERAGE" != "true" ]]; then
+              rm -f shippable/testresults/*.xml;
+          fi;
       fi
 
 script:
@@ -50,7 +52,7 @@ script:
           fi;
       elif [[  "$SHIPPABLE" == "true"  ]]; then
           RESULT_ARGS=JUNIT_XML_FILE=shippable/testresults/results.xml;
-          AFTER_SCRIPT="pwd;find . -iname \"*.xml\";find ${HOME} -iname \"*.xml\";cat shippable/testresults/results.xml";
+          AFTER_SCRIPT="pwd;find . ;find ${HOME} -iname \"*.xml\";cat shippable/testresults/results.xml";
       fi
     - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
