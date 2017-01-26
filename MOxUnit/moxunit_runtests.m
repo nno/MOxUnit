@@ -104,6 +104,7 @@ function result=moxunit_runtests(varargin)
 
     if ~isempty(params.junit_xml_file)
         write_junit_xml(params.junit_xml_file, test_report);
+        fprintf('\nXML test results written to %s\n',params.junit_xml_file);
     end
 
 
