@@ -52,7 +52,7 @@ script:
           fi;
       elif [[  "$SHIPPABLE" == "true"  ]]; then
           RESULT_ARGS=JUNIT_XML_FILE=${SHIPPABLE_BUILD_DIR}/shippable/testresults/results.xml;
-          AFTER_SCRIPT="pwd;find . ;find ${${SHIPPABLE_BUILD_DIR}/};find ${HOME} -iname \"*.xml\";cat shippable/testresults/results.xml";
+          AFTER_SCRIPT="pwd;find . ;find ${SHIPPABLE_BUILD_DIR};find ${HOME} -iname \"*.xml\";
       fi
     - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
