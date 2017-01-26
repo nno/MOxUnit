@@ -49,7 +49,8 @@ script:
               AFTER_SCRIPT="curl --verbose -F json_file=@`pwd`/coveralls.json https://coveralls.io/api/v1/jobs";
           fi;
       elif [[  "$SHIPPABLE" == "true"  ]]; then
-          RESULT_ARGS=JUNIT_XML_FILE=shippable/testresults/test_results.xml;
+          RESULT_ARGS=JUNIT_XML_FILE=shippable/testresults/results.xml;
+          AFTER_SCRIPT=cat shippable/testresults/results.xml;
       fi
     - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
