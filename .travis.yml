@@ -35,7 +35,7 @@ before_install:
     # prevent shippable from re-using old test results
     - if [[  "$SHIPPABLE" == "true"  ]]; then
           if [[  "$WITH_COVERAGE" != "true" ]]; then
-              rm -f shippable/testresults/*.xml;
+              rm -f ${SHIPPABLE_BUILD_DIR}/shippable/testresults/*.xml;
           fi;
       fi
 
@@ -45,14 +45,14 @@ script:
           COVER_ARGS=COVER=`pwd`/MOxUnit;
 
           if [[  "$SHIPPABLE" == "true"  ]]; then
-              OUTPUT_ARGS=COVER_XML_FILE=shippable/codecoverage/coverage.xml;
+              OUTPUT_ARGS=COVER_XML_FILE=${SHIPPABLE_BUILD_DIR}/shippable/codecoverage/coverage.xml;
           elif [[  "$TRAVIS" == "true"  ]]; then
               OUTPUT_ARGS=COVER_JSON_FILE=`pwd`/coveralls.json;
               AFTER_SCRIPT="curl --verbose -F json_file=@`pwd`/coveralls.json https://coveralls.io/api/v1/jobs";
           fi;
       elif [[  "$SHIPPABLE" == "true"  ]]; then
-          RESULT_ARGS=JUNIT_XML_FILE=shippable/testresults/results.xml;
-          AFTER_SCRIPT="pwd;find . ;find ${HOME} -iname \"*.xml\";cat shippable/testresults/results.xml";
+          RESULT_ARGS=JUNIT_XML_FILE=${SHIPPABLE_BUILD_DIR}/shippable/testresults/results.xml;
+          AFTER_SCRIPT="pwd;find . ;find ${${SHIPPABLE_BUILD_DIR}/};find ${HOME} -iname \"*.xml\";cat shippable/testresults/results.xml";
       fi
     - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
