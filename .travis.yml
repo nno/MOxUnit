@@ -50,7 +50,7 @@ script:
           fi;
       elif [[  "$SHIPPABLE" == "true"  ]]; then
           RESULT_ARGS=JUNIT_XML_FILE=shippable/testresults/results.xml;
-          AFTER_SCRIPT=cat shippable/testresults/results.xml;
+          AFTER_SCRIPT="cat shippable/testresults/results.xml";
       fi
     - echo Test arguments $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
     - make test $TEST_ARGS $COVER_ARGS $OUTPUT_ARGS $RESULT_ARGS
